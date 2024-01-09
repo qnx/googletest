@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shiplist>
+	<id>com.qnx.${baselineId}.osr.googletest.internal</id>
+	<name>GoogleTest 1.13.0 Library</name>
+	<description>GoogleTest - Google Testing and Mocking Framework</description>
+	<property key="f.support" value="Custom"/>
+	<property key="f.swtype" value="III"/>
+	<property key="f.engage" value="B"/>
+	<category>OSR</category>
+
+	<property key="com.qnx.internal" value="true"/>
+	<!-- don't generate provides/requires tags for internal packages-->
+	<requires value="suppress-library: autogen"/>
+	<provides value="suppress-library: autogen"/>
+
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock.so" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock_main.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock_main.so" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest.so" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest_main.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest_main.so" />
+	<asset dest="${targetfolder}/usr/include/gmock/" />
+	<asset dest="${targetfolder}/usr/include/gtest/" />
+</shiplist>

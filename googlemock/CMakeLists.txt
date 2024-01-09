@@ -106,12 +106,17 @@ endif()
 # in via add_subdirectory() rather than being a standalone build).
 if (DEFINED CMAKE_VERSION AND NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.11")
   string(REPLACE ";" "$<SEMICOLON>" dirs "${gmock_build_include_dirs}")
-  target_include_directories(gmock SYSTEM INTERFACE
-    "$<BUILD_INTERFACE:${dirs}>"
-    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
-  target_include_directories(gmock_main SYSTEM INTERFACE
-    "$<BUILD_INTERFACE:${dirs}>"
-    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
+  if(QNX)
+    target_include_directories(gmock SYSTEM INTERFACE "$<BUILD_INTERFACE:${dirs}>")
+    target_include_directories(gmock_main SYSTEM INTERFACE "$<BUILD_INTERFACE:${dirs}>")
+  else()
+    target_include_directories(gmock SYSTEM INTERFACE
+      "$<BUILD_INTERFACE:${dirs}>"
+      "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
+    target_include_directories(gmock_main SYSTEM INTERFACE
+      "$<BUILD_INTERFACE:${dirs}>"
+      "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
+  endif()
 endif()
 
 ########################################################################
@@ -201,8 +206,13 @@ if (gmock_build_tests)
   # knowing more details about the system configurations. We do not try to run
   # this binary. To get a more robust shared library coverage, configure with
   # -DBUILD_SHARED_LIBS=ON.
-  cxx_executable_with_flags(shared_gmock_test_ "${cxx_default}"
-    shared_gmock_main test/gmock-spec-builders_test.cc)
+  if(QNX)
+    cxx_executable_with_flags(shared_gmock_test_ "${cxx_default}"
+      "shared_gmock_main;regex" test/gmock-spec-builders_test.cc)
+  else()
+    cxx_executable_with_flags(shared_gmock_test_ "${cxx_default}"
+      shared_gmock_main test/gmock-spec-builders_test.cc)
+  endif()
   set_target_properties(shared_gmock_test_
     PROPERTIES
     COMPILE_DEFINITIONS "GTEST_LINKED_AS_SHARED_LIBRARY=1")
@@ -215,4 +225,13 @@ if (gmock_build_tests)
 
   cxx_executable(gmock_output_test_ test gmock)
   py_test(gmock_output_test)
+
+  if(QNX)
+    install(DIRECTORY ${PROJECT_BINARY_DIR}/
+      DESTINATION bin/googletest_tests
+      PATTERN "Makefile" EXCLUDE
+      PATTERN "CMakeFiles" EXCLUDE
+      PATTERN "*.cmake" EXCLUDE
+      PATTERN "generated" EXCLUDE)
+  endif()
 endif()

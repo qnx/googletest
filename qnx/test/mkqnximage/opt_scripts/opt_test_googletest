@@ -1,0 +1,79 @@
+#!/bin/bash
+
+. ${TOOL_DIR}/functions
+
+function brief()
+{
+    echo "--test-googletest=[no|<path>]"
+}
+
+function help()
+{
+    brief
+    cat <<EOF
+    If this option is given with a <path> to the googletest source tree, the full tree will be imported
+    on the target under /data/googletest from which you can execute the googletest test suite using:
+
+    cd /data/googletest/qnx/test
+    ./qnxtest.sh
+
+    NOTE: You must compile the googletest source tree of the desired target before building
+    the vm image.
+
+    The default is no.
+EOF
+}
+
+function validate() {
+
+	if [ ${OPT_TEST_GOOGLETEST} != "no" ]; then
+		if [ ! -d "${OPT_TEST_GOOGLETEST}" ]; then
+			echo "Invalid googletest source tree '${OPT_TEST_GOOGLETEST}'"
+			exit 1;
+		fi
+	else
+		exit 0;
+	fi
+}
+
+function configure()
+{
+	rm -f output/option_files/*.opt_test_googletest
+	if [ "$OPT_TEST_GOOGLETEST" != no ]; then
+		if [ "${OPT_VERBOSE}" == "yes" ]; then
+			echo "Building googletest file list from ${OPT_TEST_GOOGLETEST}"
+		fi
+
+		for f in $(find ${OPT_TEST_GOOGLETEST} -type f); do
+			echo "[perms=0755] googletest/${f#${OPT_TEST_GOOGLETEST}/}=${f}" >> output/option_files/data_files.opt_test_googletest
+		done;
+
+		case ${OPT_ARCH} in
+		x86*)
+			GOOGLETEST_TEST_PREFIX="nto-${OPT_ARCH}-o";
+			;;
+		*aarch64*)
+			GOOGLETEST_TEST_PREFIX="nto-aarch64-le";
+			;;
+		esac
+
+		# export googletest options"
+		echo "GOOGLETEST_TEST_PREFIX=${GOOGLETEST_TEST_PREFIX}" >> output/option_files/ifs_env.opt_test_googletest
+
+	fi
+
+	exit 0
+}
+
+case "$1" in
+	brief)
+		brief;;
+	help)
+		help;;
+	validate)
+		validate;;
+	configure)
+		configure;;
+	default)
+		echo no;;
+esac
