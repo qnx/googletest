@@ -13,14 +13,14 @@
 	<requires value="suppress-library: autogen"/>
 	<provides value="suppress-library: autogen"/>
 
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock.so.1.13.0" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock.so" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock_main.so.1.13.0" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgmock_main.so" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest.so.1.13.0" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest.so" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest_main.so.1.13.0" />
-	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/lib/libgtest_main.so" />
-	<asset dest="${targetfolder}/usr/include/gmock/" />
-	<asset dest="${targetfolder}/usr/include/gtest/" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgmock.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgmock.so" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgmock_main.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgmock_main.so" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgtest.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgtest.so" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgtest_main.so.1.13.0" />
+	<file name="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/lib/libgtest_main.so" />
+	<asset dest="${targetfolder}/usr/local/include/gmock/" />
+	<asset dest="${targetfolder}/usr/local/include/gtest/" />
 </shiplist>

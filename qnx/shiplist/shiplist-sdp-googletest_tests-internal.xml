@@ -13,5 +13,5 @@
 	<requires value="suppress-library: autogen"/>
 	<provides value="suppress-library: autogen"/>
 
-	<asset dest="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/bin/googletest_tests" />
+	<asset dest="${targetfolder}/[ARCH:aarch64le,x86_64]/usr/local/bin/googletest_tests" />
 </shiplist>
