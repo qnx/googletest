@@ -1292,7 +1292,11 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
 #if GTEST_OS_QNX
   // Obtains the current directory and sets it to be closed in the child
   // process.
+#if __QNX__ >= 800
+  const int cwd_fd = open(".", O_RDONLY | O_DIRECTORY);
+#else
   const int cwd_fd = open(".", O_RDONLY);
+#endif // __QNX__ >= 800
   GTEST_DEATH_TEST_CHECK_(cwd_fd != -1);
   GTEST_DEATH_TEST_CHECK_SYSCALL_(fcntl(cwd_fd, F_SETFD, FD_CLOEXEC));
   // We need to execute the test program in the same environment where
