@@ -452,6 +452,10 @@ class OnceAction<Result(Args...)> final {
                     // traits above.
                     internal::negation<std::is_same<
                         OnceAction, typename std::decay<Callable>::type>>,
+#if defined(__QNX__) and ___QNX__ < 800
+                    internal::negation<std::is_same<
+                        typename std::tuple<OnceAction&&>, typename std::decay<Callable>::type>>,
+#endif
                     IsDirectlyCompatible<Callable>>  //
                 ::value,
                 int>::type = 0>
@@ -469,6 +473,10 @@ class OnceAction<Result(Args...)> final {
                     // traits above.
                     internal::negation<std::is_same<
                         OnceAction, typename std::decay<Callable>::type>>,
+#if defined(__QNX__) and ___QNX__ < 800
+                    internal::negation<std::is_same<
+                        typename std::tuple<OnceAction&&>, typename std::decay<Callable>::type>>,
+#endif
                     // Exclude callables for which the overload above works.
                     // We'd rather provide the arguments if possible.
                     internal::negation<IsDirectlyCompatible<Callable>>,
