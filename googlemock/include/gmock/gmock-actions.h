@@ -452,7 +452,7 @@ class OnceAction<Result(Args...)> final {
                     // traits above.
                     internal::negation<std::is_same<
                         OnceAction, typename std::decay<Callable>::type>>,
-#if defined(__QNX__) and ___QNX__ < 800
+#if defined(__QNX__) and __QNX__ < 800
                     internal::negation<std::is_same<
                         typename std::tuple<OnceAction&&>, typename std::decay<Callable>::type>>,
 #endif
@@ -473,7 +473,7 @@ class OnceAction<Result(Args...)> final {
                     // traits above.
                     internal::negation<std::is_same<
                         OnceAction, typename std::decay<Callable>::type>>,
-#if defined(__QNX__) and ___QNX__ < 800
+#if defined(__QNX__) and __QNX__ < 800
                     internal::negation<std::is_same<
                         typename std::tuple<OnceAction&&>, typename std::decay<Callable>::type>>,
 #endif
